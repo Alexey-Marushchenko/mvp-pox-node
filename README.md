@@ -45,7 +45,6 @@ We are planning support for the following operating systems:
 ```
 Debian 10*
 Fedora 30*
-CentOS 7*
 RHEL 8*
 
 ```
@@ -65,7 +64,7 @@ $ sudo apt -y install ansible
 ### 2. Clone the repository
 
 ```
-$ git clone https://github.com/ethernity-cloud/mvp-pox-node.git
+$ git clone https://github.com/Alexey-Marushchenko/mvp-pox-node
 ```
 
 
@@ -73,8 +72,6 @@ $ git clone https://github.com/ethernity-cloud/mvp-pox-node.git
 
 ```bash
 $ cd mvp-pox-node
-$ sudo ansible-galaxy collection install crivetimihai.virtualization
-$ sudo ansible-galaxy install uoi-io.libvirt
 $ sudo ansible-playbook -i localhost, playbook.yml \
   -e "ansible_python_interpreter=/usr/bin/python3"
 ```
