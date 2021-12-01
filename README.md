@@ -72,6 +72,8 @@ $ git clone https://github.com/Alexey-Marushchenko/mvp-pox-node
 
 ```bash
 $ cd mvp-pox-node
+$ sudo ansible-galaxy collection install crivetimihai.virtualization
+$ sudo ansible-galaxy install uoi-io.libvirt
 $ sudo ansible-playbook -i localhost, playbook.yml \
   -e "ansible_python_interpreter=/usr/bin/python3"
 ```
@@ -105,8 +107,6 @@ $
 
 ```bash
 $ sudo cp -rf ~/.vagrant.d /root
-$ sudo ansible-galaxy collection install crivetimihai.virtualization
-$ sudo ansible-galaxy install uoi-io.libvirt
 $ sudo ansible-playbook -i localhost, playbook.yml \
   -e "ansible_python_interpreter=/usr/bin/python3"
 ```
