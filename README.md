@@ -34,16 +34,16 @@ HP Elitedesk 800 G6
 Currently the following operating systems are suported:
 
 ```
-Ubuntu 18.04
 Ubuntu 20.04
-Debian 11
 
 ```
 
 We are planning support for the following operating systems:
 
 ```
+Ubuntu 18.04*
 Debian 10*
+Debian 11*
 Fedora 30*
 RHEL 8*
 
