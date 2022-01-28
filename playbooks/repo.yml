@@ -1,0 +1,63 @@
+#
+# Copyright (C) 2022
+#
+# This file is part of ETHERNITY NODE.
+#
+# ETHERNITY SC is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# Version 20220128_1049
+# Target OS Ubuntu 20.04
+
+#
+# Prepare repository
+# This should be one time run block, not to times. Make some tests for run
+#
+  - name: "3.1 Create keyrings directory for repo key"
+    ansible.builtin.file:
+      path: /usr/local/share/keyrings/
+      state: directory
+      mode: '0755'
+    become: yes
+  - name: "3.2 Download repo key"
+    ansible.builtin.get_url:
+      url: https://www.marush.com/ubuntu/etny2004/ethernity-focal.asc
+      dest: /tmp
+      checksum: sha256:https://www.marush.com/ubuntu/etny2004/sha256sum.txt
+  - name: "3.3 Dearmor repo key"
+    ansible.builtin.shell:
+      cmd: cat /tmp/ethernity-focal.asc | gpg --dearmor >  /tmp/ethernity-focal-keyring.gpg
+  - name: "3.4 Move dearmored repo key"
+    ansible.builtin.copy:
+      src: /tmp/ethernity-focal-keyring.gpg
+      dest: /usr/local/share/keyrings/
+      owner: root
+      group: root
+      mode: '0644'
+    become: yes
+  - name: "3.5 Delete armored repo key"
+    ansible.builtin.file:
+      path: /tmp/ethernity-focal.asc
+      state: absent
+  - name: "3.6 Delete dearmored repo key"
+    ansible.builtin.file:
+      path: /tmp/ethernity-focal-keyring.gpg
+      state: absent
+  - name: "3.7 Setup repo list"
+    ansible.builtin.copy:
+      src: ubuntu/etc/apt/sources.list.d/ethernity-focal.list
+      dest: /etc/apt/sources.list.d/
+      owner: root
+      group: root
+      mode: '0644'
+    become: yes

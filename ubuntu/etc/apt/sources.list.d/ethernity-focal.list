@@ -1,0 +1,1 @@
+deb [arch=amd64 signed-by=/usr/local/share/keyrings/ethernity-focal-keyring.gpg] https://www.marush.com/ubuntu/etny2004 focal contrib

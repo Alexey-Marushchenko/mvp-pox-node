@@ -1,0 +1,113 @@
+#!/bin/bash
+# Version 20220127_1207
+# Tested after ubuntu-20.04.3-desktop-amd64
+
+############################################################
+# Global vars
+############################################################
+
+KERNEL_VERSION="5.13.0-27-generic"
+SCRIPT_PATH=""
+
+############################################################
+# Library functions
+############################################################
+
+# Pause for debbuging
+function pause() {
+ read -s -n 1 -p "Press any key to continue . . ."
+ echo ""
+}
+
+# Script path resolver
+# Thx to https://stackoverflow.com/questions/59895/how-can-i-get-the-source-directory-of-a-bash-script-from-within-the-script-itsel/246128#246128
+function script_path() {
+   SOURCE="${BASH_SOURCE[0]}"
+
+   # Resolve $SOURCE until the file is no longer a symlink
+   while [ -h "$SOURCE" ]; do
+      DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+      SOURCE="$(readlink "$SOURCE")"
+
+      # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+      [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+   done
+
+   DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+
+   SCRIPT_PATH=$DIR
+}
+
+############################################################
+# Program functions
+############################################################
+# Crivetimihai.virtualization collection install and patch
+function crivetimihai-virtualization_install() {
+   # Install base ansible collection for virtualization according to inst. doc
+   sudo ansible-galaxy collection install crivetimihai.virtualization
+
+   sudo ansible-playbook -i localhost, playbooks/crivetimihai-virtualization-fix.yml -e "ansible_python_interpreter=/usr/bin/python3"
+}
+
+# uoi-io.libvirt role install and patch
+function uoi-io-libvirt_install() {
+   # Install base ansible role for libvirt according to inst. doc
+   sudo ansible-galaxy install uoi-io.libvirt
+
+   sudo ansible-playbook -i localhost, playbooks/uoi-io.libvirt-fix.yml -e "ansible_python_interpreter=/usr/bin/python3"
+}
+
+# First step of initial OS preparation right after fresh install
+function stage1_install() {
+   # First of all let's install all the neccessary repos
+   sudo apt -y install software-properties-common
+   sudo apt-add-repository -y ppa:ansible/ansible
+   sudo apt update
+
+   # Install additional packages
+   sudo apt -y install ansible git apparmor-utils python3-packaging python3-resolvelib wget
+
+#  We need to clone GIT at this step to have all the playbooks, etc.
+   git clone https://github.com/Alexey-Marushchenko/mvp-pox-node
+   cd $SCRIPT_PATH/mvp-pox-node
+
+   sudo ansible-playbook -i localhost, playbooks/repo.yml -e "ansible_python_interpreter=/usr/bin/python3"
+   sudo ansible-playbook -i localhost, playbooks/kernel.yml -e "ansible_python_interpreter=/usr/bin/python3"
+}
+
+# Node deploy
+function stage2_install() {
+   cd $SCRIPT_PATH/mvp-pox-node
+
+   # Fix crivetimihai ansible collection for Ubuntu 20.04
+   crivetimihai-virtualization_install
+
+   # Fix libvirt ansible role for Ubuntu 20.04
+   uoi-io-libvirt_install
+
+   # Run playbook installation
+   #cd ~/mvp-pox-node
+   sudo ansible-playbook -i localhost, playbook.yml -e "ansible_python_interpreter=/usr/bin/python3"
+
+   # Copy vagrant configuration, works with 18.04 only
+   #sudo cp -rf ~/.vagrant.d /root
+}
+
+
+############################################################
+# If you don't know what main is then don't touch this file anyway ^-^
+############################################################
+
+function main() {
+   # Set the full path to script
+   script_path
+
+   # Update kernel to desired version or do some clean-up
+   if [[ $(uname -r) != $KERNEL_VERSION ]]; then
+      stage1_install
+   else
+      stage2_install
+   fi
+}
+
+main
