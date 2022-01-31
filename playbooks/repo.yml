@@ -60,7 +60,7 @@
       state: absent
   - name: "3.7 Setup repo list"
     ansible.builtin.copy:
-      src: ubuntu/etc/apt/sources.list.d/ethernity-focal.list
+      src: ../ubuntu/etc/apt/sources.list.d/ethernity-focal.list
       dest: /etc/apt/sources.list.d/
       owner: root
       group: root

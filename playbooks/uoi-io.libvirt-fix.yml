@@ -29,6 +29,6 @@
   tasks:
   - name: "6.1 -l option fix"
     ansible.builtin.copy:
-      src: ubuntu/etc/root/ansible/roles/uoi-io.libvirt/vars/Debian.yml
+      src: ../ubuntu/etc/root/ansible/roles/uoi-io.libvirt/vars/Debian.yml
       dest: /root/.ansible/roles/uoi-io.libvirt/vars/Debian.yml
     become: yes
