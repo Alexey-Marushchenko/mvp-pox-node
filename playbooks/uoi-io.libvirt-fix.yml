@@ -22,6 +22,11 @@
 #
 # Fix uoi-io.libvirt role
 #
+- name: uoi-io.libvirt role fix
+  hosts: all
+  connection: local  
+  gather_facts: no
+  tasks:
   - name: "6.1 -l option fix"
     ansible.builtin.copy:
       src: ubuntu/etc/root/ansible/roles/uoi-io.libvirt/vars/Debian.yml

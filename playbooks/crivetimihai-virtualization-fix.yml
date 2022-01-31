@@ -22,6 +22,11 @@
 #
 # Fix crivetimihai.virtualization collection
 #
+- name: crivetimihai.virtualization collection fix
+  hosts: all
+  connection: local  
+  gather_facts: no
+  tasks:
   - name: "5.1 KVM fix"
     ansible.builtin.copy:
       src: ubuntu/etc/root/ansible/collections/ansible_collections/crivetimihai/virtualization/roles/kvm/tasks/main.yml

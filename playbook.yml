@@ -38,15 +38,15 @@
         - { option: 'cgroup_device_acl', value: 'cgroup_device_acl = [ "/dev/null", "/dev/full", "/dev/zero", "/dev/random", "/dev/urandom", "/dev/ptmx", "/dev/kvm", "/dev/kqemu", "/dev/rtc", "/dev/hpet", "/dev/sgx_virt", "/dev/sgx_enclave", "/dev/sgx_provision", "/dev/sgx_vepc" ]' }
   tasks:
   - name: "AppArmor - enable sgx support for libvirt qemu TEMPLATE"
-    ansible.builin.copy:
+    ansible.builtin.copy:
       src: ubuntu/etc/apparmor.d/libvirt/TEMPLATE.qemu
       dest: /etc/apparmor.d/libvirt/TEMPLATE.qemu
   - name: "AppArmor - enable sgx support for libvirt qemu at /usr/local/bin"
-    ansible.builin.copy:
+    ansible.builtin.copy:
       src: ubuntu/etc/apparmor.d/local/usr.sbin.libvirtd
       dest: /etc/apparmor.d/local/usr.sbin.libvirtd
   - name: "Distr qemu - remove"
-    ansible.builin.apt:
+    ansible.builtin.apt:
       pkg:
       - qemu-kvm
       - qemu-utils
@@ -58,14 +58,14 @@
       - qemu-user
       state: absent
   - name: "Remove unused packages"
-    ansible.builin.apt:
+    ansible.builtin.apt:
       autoremove: yes
   - name: "Qemu SGX - install"
-    ansible.builin.apt:
+    ansible.builtin.apt:
       pkg:    
        qemu-sgx_6.2.0-1
   - name: "Vagrant-libvirt package dependencies - install"
-    ansible.builin.apt:
+    ansible.builtin.apt:
       pkg:
       - ebtables
       - dnsmasq-base
@@ -76,49 +76,49 @@
       - zlib1g-dev
       - ruby-dev
 #  - name: "Add an apt signing key for vagrant-repository"
-#    ansible.builin.apt_key:
+#    ansible.builtin.apt_key:
 #      url: https://apt.releases.hashicorp.com/gpg
 #  - name: "Vagrant-repository - install"
-#    ansible.builin.apt_repository:
+#    ansible.builtin.apt_repository:
 #      repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
 #  - name: "Vargant - remove old vagrant installed by role crivetimihai.virtualization.vagrant"
-#    ansible.builin.apt:
+#    ansible.builtin.apt:
 #      pkg:
 #      - vagrant
 #      state: absent
 #  - name: "Vargant - install the latest version"
-#    ansible.builin.apt:
+#    ansible.builtin.apt:
 #      pkg:
 #      - vagrant
   - name: "Dev-tools - install"
-    ansible.builin.apt:
+    ansible.builtin.apt:
       pkg:
       - ubuntu-dev-tools
   - name: "Vagrant-libvirt - install"
-    ansible.builin.shell: vagrant plugin install vagrant-libvirt
+    ansible.builtin.shell: vagrant plugin install vagrant-libvirt
   - name: "Vagrant-preload - install"
-    ansible.builin.shell: vagrant plugin install vagrant-reload
+    ansible.builtin.shell: vagrant plugin install vagrant-reload
   - name: "Dev-tools - remove"
-    ansible.builin.apt:
+    ansible.builtin.apt:
       pkg:
       - ubuntu-dev-tools
       state: absent
   - name: "AppArmor profile - reload"
-    ansible.builin.shell: sudo apparmor_parser -r /etc/apparmor.d/usr.sbin.libvirtd
+    ansible.builtin.shell: sudo apparmor_parser -r /etc/apparmor.d/usr.sbin.libvirtd
   - name: "Vagrant - cleanup VM"
-    ansible.builin.shell: vagrant destroy -f
+    ansible.builtin.shell: vagrant destroy -f
   - name: "Vagrant - provision VM"
-    ansible.builin.shell: vagrant up --provider=libvirt
+    ansible.builtin.shell: vagrant up --provider=libvirt
   - name: "Startup - set etny-vagrant configuration"
-    ansible.builin.shell: echo "ETNY_PATH=${PWD}" > /etc/default/etny-vagrant
+    ansible.builtin.shell: echo "ETNY_PATH=${PWD}" > /etc/default/etny-vagrant
   - name: "Startup - create etny-vagrant.service"
-    ansible.builin.copy:
+    ansible.builtin.copy:
       src: ubuntu/etc/systemd/system/etny-vagrant.service
       dest: /etc/systemd/system/etny-vagrant.service
   - name: "Startup - enable etny-vagrant.service"
-    ansible.builin.shell: systemctl enable etny-vagrant.service
+    ansible.builtin.shell: systemctl enable etny-vagrant.service
   - name: "Startup - start etny-vagrant.service"
-    ansible.builin.shell: systemctl restart etny-vagrant.service
+    ansible.builtin.shell: systemctl restart etny-vagrant.service
   - name: "Finish"
-    ansible.builin.debug:
+    ansible.builtin.debug:
       msg: Ethernity NODE installation successful

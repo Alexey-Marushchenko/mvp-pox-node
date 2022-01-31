@@ -23,6 +23,11 @@
 # Prepare repository
 # This should be one time run block, not to times. Make some tests for run
 #
+- name: install ethernity-focal repo
+  hosts: all
+  connection: local  
+  gather_facts: no
+  tasks:
   - name: "3.1 Create keyrings directory for repo key"
     ansible.builtin.file:
       path: /usr/local/share/keyrings/
