@@ -23,17 +23,17 @@
 # Fix crivetimihai.virtualization collection
 #
   - name: "5.1 KVM fix"
-    ansible.builin.copy:
+    ansible.builtin.copy:
       src: ubuntu/etc/root/ansible/collections/ansible_collections/crivetimihai/virtualization/roles/kvm/tasks/main.yml
       dest: /root/.ansible/collections/ansible_collections/crivetimihai/virtualization/roles/kvm/tasks/main.yml
     become: yes
   - name: "5.2 Vagrant fix"
-    ansible.builin.copy:
+    ansible.builtin.copy:
       src: ubuntu/etc/root/ansible/collections/ansible_collections/crivetimihai/virtualization/roles/vagrant/tasks/main.yml
       dest: /root/.ansible/collections/ansible_collections/crivetimihai/virtualization/roles/vagrant/tasks/main.yml
     become: yes
   - name: "5.3 Vagrant version fix"
-    ansible.builin.copy:
+    ansible.builtin.copy:
       src: ubuntu/etc/root/ansible/collections/ansible_collections/crivetimihai/virtualization/roles/vagrant/vars/main.yml
       dest: /root/.ansible/collections/ansible_collections/crivetimihai/virtualization/roles/vagrant/vars/main.yml
     become: yes

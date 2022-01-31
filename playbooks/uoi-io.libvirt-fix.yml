@@ -23,7 +23,7 @@
 # Fix uoi-io.libvirt role
 #
   - name: "6.1 -l option fix"
-    ansible.builin.copy:
+    ansible.builtin.copy:
       src: ubuntu/etc/root/ansible/roles/uoi-io.libvirt/vars/Debian.yml
       dest: /root/.ansible/roles/uoi-io.libvirt/vars/Debian.yml
     become: yes
