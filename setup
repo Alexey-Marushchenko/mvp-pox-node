@@ -65,14 +65,18 @@ function stage1_install() {
    sudo apt update
 
    # Install additional packages
-   sudo apt -y install ansible git apparmor-utils python3-packaging python3-resolvelib wget
+   sudo apt -y install ansible git apparmor-utils python3-packaging python3-resolvelib
 
 #  We need to clone GIT at this step to have all the playbooks, etc.
    git clone https://github.com/Alexey-Marushchenko/mvp-pox-node
    cd $SCRIPT_PATH/mvp-pox-node
 
    sudo ansible-playbook -i localhost, playbooks/repo.yml -e "ansible_python_interpreter=/usr/bin/python3"
-   sudo ansible-playbook -i localhost, playbooks/kernel.yml -e "ansible_python_interpreter=/usr/bin/python3"
+   
+   # Update kernel to desired version
+   if [[ $(uname -r) != $KERNEL_VERSION ]]; then
+      sudo ansible-playbook -i localhost, playbooks/kernel.yml -e "ansible_python_interpreter=/usr/bin/python3"
+   fi
 }
 
 # Node deploy
@@ -102,12 +106,12 @@ function main() {
    # Set the full path to script
    script_path
 
-   # Update kernel to desired version or do some clean-up
-   if [[ $(uname -r) != $KERNEL_VERSION ]]; then
+   # Update kernel to desired version
+#   if [[ $(uname -r) != $KERNEL_VERSION ]]; then
       stage1_install
-   else
+#   else
       stage2_install
-   fi
+#   fi
 }
 
 main
