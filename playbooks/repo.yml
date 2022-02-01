@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Version 20220128_1049
+# Version 20220201_0812
 # Target OS Ubuntu 20.04
 
 #
@@ -60,7 +60,7 @@
       state: absent
   - name: "3.7 Setup repo list"
     ansible.builtin.copy:
-      src: ../ubuntu/etc/apt/sources.list.d/ethernity-focal.list
+      src: files/etc/apt/sources.list.d/ethernity-focal.list
       dest: /etc/apt/sources.list.d/
       owner: root
       group: root

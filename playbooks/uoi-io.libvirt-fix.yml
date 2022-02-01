@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Version 20220128_1233
+# Version 20220201_0812
 # Target OS Ubuntu 20.04
 
 #
@@ -29,6 +29,6 @@
   tasks:
   - name: "6.1 -l option fix"
     ansible.builtin.copy:
-      src: ../ubuntu/etc/root/ansible/roles/uoi-io.libvirt/vars/Debian.yml
+      src: files/etc/root/ansible/roles/uoi-io.libvirt/vars/Debian.yml
       dest: /root/.ansible/roles/uoi-io.libvirt/vars/Debian.yml
     become: yes

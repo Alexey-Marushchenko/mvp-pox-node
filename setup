@@ -1,5 +1,5 @@
 #!/bin/bash
-# Version 20220127_1207
+# Version 20220201_0814
 # Tested after ubuntu-20.04.3-desktop-amd64
 
 ############################################################
@@ -91,7 +91,7 @@ function stage2_install() {
 
    # Run playbook installation
    #cd ~/mvp-pox-node
-   sudo ansible-playbook -i localhost, playbook.yml -e "ansible_python_interpreter=/usr/bin/python3"
+   sudo ansible-playbook -i localhost, playbooks/playbook.yml -e "ansible_python_interpreter=/usr/bin/python3"
 
    # Copy vagrant configuration, works with 18.04 only
    #sudo cp -rf ~/.vagrant.d /root

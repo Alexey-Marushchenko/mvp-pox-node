@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Version 20220128_1458
+# Version 20220201_0812
 # Target OS Ubuntu 20.04
 
 - name: Ethernity NODE 
@@ -39,11 +39,11 @@
   tasks:
   - name: "AppArmor - enable sgx support for libvirt qemu TEMPLATE"
     ansible.builtin.copy:
-      src: ubuntu/etc/apparmor.d/libvirt/TEMPLATE.qemu
+      src: files/etc/apparmor.d/libvirt/TEMPLATE.qemu
       dest: /etc/apparmor.d/libvirt/TEMPLATE.qemu
   - name: "AppArmor - enable sgx support for libvirt qemu at /usr/local/bin"
     ansible.builtin.copy:
-      src: ubuntu/etc/apparmor.d/local/usr.sbin.libvirtd
+      src: files/etc/apparmor.d/local/usr.sbin.libvirtd
       dest: /etc/apparmor.d/local/usr.sbin.libvirtd
   - name: "Distr qemu - remove"
     ansible.builtin.apt:
@@ -113,7 +113,7 @@
     ansible.builtin.shell: echo "ETNY_PATH=${PWD}" > /etc/default/etny-vagrant
   - name: "Startup - create etny-vagrant.service"
     ansible.builtin.copy:
-      src: ubuntu/etc/systemd/system/etny-vagrant.service
+      src: files/etc/systemd/system/etny-vagrant.service
       dest: /etc/systemd/system/etny-vagrant.service
   - name: "Startup - enable etny-vagrant.service"
     ansible.builtin.shell: systemctl enable etny-vagrant.service

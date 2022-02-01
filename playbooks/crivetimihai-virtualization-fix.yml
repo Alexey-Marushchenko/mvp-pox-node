@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Version 20220128_1234
+# Version 20220201_0812
 # Target OS Ubuntu 20.04
 
 #
@@ -29,16 +29,16 @@
   tasks:
   - name: "5.1 KVM fix"
     ansible.builtin.copy:
-      src: ../ubuntu/etc/root/ansible/collections/ansible_collections/crivetimihai/virtualization/roles/kvm/tasks/main.yml
+      src: files/etc/root/ansible/collections/ansible_collections/crivetimihai/virtualization/roles/kvm/tasks/main.yml
       dest: /root/.ansible/collections/ansible_collections/crivetimihai/virtualization/roles/kvm/tasks/main.yml
     become: yes
   - name: "5.2 Vagrant fix"
     ansible.builtin.copy:
-      src: ../ubuntu/etc/root/ansible/collections/ansible_collections/crivetimihai/virtualization/roles/vagrant/tasks/main.yml
+      src: files/etc/root/ansible/collections/ansible_collections/crivetimihai/virtualization/roles/vagrant/tasks/main.yml
       dest: /root/.ansible/collections/ansible_collections/crivetimihai/virtualization/roles/vagrant/tasks/main.yml
     become: yes
   - name: "5.3 Vagrant version fix"
     ansible.builtin.copy:
-      src: ../ubuntu/etc/root/ansible/collections/ansible_collections/crivetimihai/virtualization/roles/vagrant/vars/main.yml
+      src: files/etc/root/ansible/collections/ansible_collections/crivetimihai/virtualization/roles/vagrant/vars/main.yml
       dest: /root/.ansible/collections/ansible_collections/crivetimihai/virtualization/roles/vagrant/vars/main.yml
     become: yes
