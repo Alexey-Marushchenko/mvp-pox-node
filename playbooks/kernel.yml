@@ -16,13 +16,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Version 20220128_1049
+# Version 20220201_0955
 # Target OS Ubuntu 20.04
 
 #
 # Install kernel 5.13
 #
-- name: install kernel 5.13.0-27
+- name: install kernel 5.13.0-28
   hosts: all
   connection: local  
   gather_facts: no
@@ -31,7 +31,7 @@
     when: ansible_kernel is version('5.13','<=')
     ansible.builtin.apt:
       pkg:
-        - linux-image-5.13.0-27-generic
+        - linux-image-5.13.0-28-generic
       update_cache: yes
     become: yes
   - name: "4.2 Reboot"

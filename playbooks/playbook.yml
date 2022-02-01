@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Version 20220201_0812
+# Version 20220201_1146
 # Target OS Ubuntu 20.04
 
 - name: Ethernity NODE 
@@ -63,7 +63,8 @@
   - name: "Qemu SGX - install"
     ansible.builtin.apt:
       pkg:    
-       qemu-sgx_6.2.0-1
+       qemu-sgx
+      update_cache: yes
   - name: "Vagrant-libvirt package dependencies - install"
     ansible.builtin.apt:
       pkg:
